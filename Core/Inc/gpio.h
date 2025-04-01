@@ -8,13 +8,27 @@
 #ifndef INC_GPIO_H_
 #define INC_GPIO_H_
 
+#include "stdio.h"
+#include "stdint.h"
 
+//define base register address of GPIOx(from A to G)
+#define GPIOA_BASE_ADDR 0x40010800
+#define GPIOB_BASE_ADDR 0x40010C00
+#define GPIOC_BASE_ADDR 0x40011000
+#define GPIOD_BASE_ADDR 0x40011400
+#define GPIOE_BASE_ADDR 0x40011800
 
-//define base register address of GPIOx(from A to E)
-
-
-
-
+//define gpio mode
+#define GPIO_INPUT_ANALOG_MODE 0b0000;
+#define GPIO_FLOATING_INPUT_MODE 0b0100;
+#define GPIO_INPUT_PULL_UP_PULL_DOWN 0b1000;
+#define GPIO_OUTPUT_PUSH_PULL 0b0000;
+#define GPIO_OUTPUT_OPEN-DRAIN 0b01;
+#define GPIO_ALTERNATE_FUNCTION_OUTPUT_PUSH_PULL 0b10;
+#define GPIO_ALTERNATE_FUNCTION_OUTPUT_OPEN-DRAIN 0b11;
+#define GPIO_OUTPUT_SPEED_10MHZ 0b01;
+#define GPIO_OUTPUT_SPEED_2MHZ 0b10;
+#define GPIO_OUTPUT_SPEED_50MHZ 0b11;
 
 
 
@@ -32,14 +46,17 @@ typedef struct {
 typedef struct
 {
   uint32_t Pin;       // which pin (0-15)
-  uint32_t Mode;      // choose input or output
-  uint32_t Pull;      // which mode of input(or output) example pull-up,push-pull,...
+  uint32_t Mode;      // choose gpio mode
   uint32_t Speed;     // speed for output
   uint32_t Alternate; // alternate function
-} GPIO_InitTypeDef;
+}GPIO_InitTypeDef;
 
 
-
+#define GPIOA ((GPIO_TypeDef *) GPIOA_BASE_ADDR)
+#define GPIOB ((GPIO_TypeDef *) GPIOB_BASE_ADDR)
+#define GPIOC ((GPIO_TypeDef *) GPIOC_BASE_ADDR)
+#define GPIOD ((GPIO_TypeDef *) GPIOD_BASE_ADDR)
+#define GPIOE ((GPIO_TypeDef *) GPIOE_BASE_ADDR)
 
 
 // 1️⃣ GPIO Initialization
