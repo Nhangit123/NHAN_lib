@@ -8,6 +8,40 @@
 #ifndef INC_GPIO_H_
 #define INC_GPIO_H_
 
+
+
+//define base register address of GPIOx(from A to E)
+
+
+
+
+
+
+
+typedef struct {
+	uint32_t CRL;	//offset 0x00	configuration low
+	uint32_t CRH;	//offset 0x04	configuration high
+	uint32_t IDR;	//offset 0x08	input data register
+	uint32_t ODR;	//offset 0x0C	output data register
+	uint32_t BSRR;	//offset 0x10	bit set/reset register
+	uint32_t BRR;	//offset 0x14	bit reset register
+	uint32_t LCKR;	//offset 0x18	configuration lock register
+}GPIO_TypeDef;
+
+//page 172 reference manual
+typedef struct
+{
+  uint32_t Pin;       // which pin (0-15)
+  uint32_t Mode;      // choose input or output
+  uint32_t Pull;      // which mode of input(or output) example pull-up,push-pull,...
+  uint32_t Speed;     // speed for output
+  uint32_t Alternate; // alternate function
+} GPIO_InitTypeDef;
+
+
+
+
+
 // 1️⃣ GPIO Initialization
 // Configures a GPIO pin as input, output, or alternate function.
 void GPIO_Init(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32_t Mode, uint32_t Pull, uint32_t Speed);
