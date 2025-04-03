@@ -11,6 +11,20 @@
 #include "stdio.h"
 #include "stdint.h"
 
+/*
+ to use this init function we should follow these step
+ fisrt declare 2 struct
+ */
+
+
+
+
+
+
+
+
+
+
 //define base register address of GPIOx(from A to G)
 #define GPIOA_BASE_ADDR 0x40010800
 #define GPIOB_BASE_ADDR 0x40010C00
@@ -19,16 +33,16 @@
 #define GPIOE_BASE_ADDR 0x40011800
 
 //define gpio mode
-#define GPIO_INPUT_ANALOG_MODE 0b0000;
-#define GPIO_FLOATING_INPUT_MODE 0b0100;
-#define GPIO_INPUT_PULL_UP_PULL_DOWN 0b1000;
-#define GPIO_OUTPUT_PUSH_PULL 0b0000;
-#define GPIO_OUTPUT_OPEN-DRAIN 0b01;
-#define GPIO_ALTERNATE_FUNCTION_OUTPUT_PUSH_PULL 0b10;
-#define GPIO_ALTERNATE_FUNCTION_OUTPUT_OPEN-DRAIN 0b11;
-#define GPIO_OUTPUT_SPEED_10MHZ 0b01;
-#define GPIO_OUTPUT_SPEED_2MHZ 0b10;
-#define GPIO_OUTPUT_SPEED_50MHZ 0b11;
+#define GPIO_INPUT_ANALOG_MODE 0b0000
+#define GPIO_FLOATING_INPUT_MODE 0b0100
+#define GPIO_INPUT_PULL_UP_PULL_DOWN 0b1000
+#define GPIO_OUTPUT_PUSH_PULL 0b00
+#define GPIO_OUTPUT_OPEN_DRAIN 0b01
+#define GPIO_ALTERNATE_FUNCTION_OUTPUT_PUSH_PULL 0b10
+#define GPIO_ALTERNATE_FUNCTION_OUTPUT_OPEN_DRAIN 0b11
+#define GPIO_OUTPUT_SPEED_10MHZ 0b01
+#define GPIO_OUTPUT_SPEED_2MHZ 0b10
+#define GPIO_OUTPUT_SPEED_50MHZ 0b11
 
 
 
@@ -52,6 +66,9 @@ typedef struct
 }GPIO_InitTypeDef;
 
 
+
+
+// define a pointer type struct and point to base_addr
 #define GPIOA ((GPIO_TypeDef *) GPIOA_BASE_ADDR)
 #define GPIOB ((GPIO_TypeDef *) GPIOB_BASE_ADDR)
 #define GPIOC ((GPIO_TypeDef *) GPIOC_BASE_ADDR)
@@ -59,14 +76,39 @@ typedef struct
 #define GPIOE ((GPIO_TypeDef *) GPIOE_BASE_ADDR)
 
 
-// 1️⃣ GPIO Initialization
-// Configures a GPIO pin as input, output, or alternate function.
-void GPIO_Init(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32_t Mode, uint32_t Pull, uint32_t Speed);
+/* GPIO Initialization
+ Configures a GPIO pin as input, output, or alternate function
 
-// 2️⃣ Write to GPIO (Set/Reset a Pin)
-// Sets or clears a GPIO pin (High/Low).
-void GPIO_Write(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
+ to use this init function we should follow these step
+ fisrt declare struct GPIO_InitTypeDef
+ give data to each element of this struct
+ pass struct to function
+ */
 
+void NHAN_GPIO_Init(GPIO_InitTypeDef *gpio_init_struct,GPIO_TypeDef *gpiox);
+
+
+
+/*
+ Write to GPIO (Set/Reset a Pin)
+ Sets or clears a GPIO pin (High/Low)
+
+*/
+typedef enum
+{
+	RESET = 0,
+	SET,
+}GPIO_Pin_State;
+
+
+void NHAN_GPIO_Write(GPIO_TypeDef *gpiox, uint16_t GPIO_Pin, GPIO_Pin_State PinState);
+
+
+
+
+
+
+/*
 // 3️⃣ Read GPIO Pin State
 // Reads the current state of a GPIO pin (High or Low).
 GPIO_PinState GPIO_Read(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
@@ -82,7 +124,7 @@ void GPIO_Config_Interrupt(uint16_t GPIO_Pin, uint32_t Trigger);
 // 6️⃣ Interrupt Callback Function
 // Called automatically when a GPIO interrupt occurs.
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
-
+*/
 
 
 #endif /* INC_GPIO_H_ */
